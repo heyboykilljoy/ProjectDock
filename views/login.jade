@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	#login-page
+		.container
+			form.form-login(action="login", method="POST")
+				h2.form-login-heading sign in now
+				if error
+					.centered
+						p= error
+				.login-wrap
+					input.form-control(name="username" type="text" placeholder="User ID" autofocus)
+					br
+					input.form-control(name="password" type="password" placeholder="Password")
+					button.btn.btn-theme.btn-block(type="submit")
+						i.fa.fa-lock  SIGN IN
+					hr
+					.login-social-link.centered
+						p or you can sign in via your social network
+						a.btn.btn-facebook(href="/auth/facebook" type="submit")<i class="fa fa-lg fa-facebook"></i> Facebook
+						a.btn.btn-google(href="/auth/google" type="submit")<i class="fa fa-lg fa-google-plus"></i> Google
+						hr
+						p Don't have an account yet?
+						a.signup(href='/signup') Sign Up Here!
+ 
+block scripts
+	script(type="text/javascript" src="js/jquery.backstretch.min.js")
+	script $.backstretch("img/login-bg.jpg", {speed: 500})

@@ -1,0 +1,169 @@
+extends layout
+
+block content
+	//- >>>>>>>> Top Navbar <<<<<<<<
+	nav.navbar.navbar-default.navbar-fixed-top
+		.container-fluid
+			ul.nav.navbar-nav
+				li.active
+					a.fa.fa-bars.fa-2x
+				li
+					a.icon(href="/")
+						img.logo(src="img/pd.png" height="50px")
+
+			a.btn.btn-default.navbar-btn.navbar-right(href="logout" type="button") Logout
+
+			ul.nav.navbar-nav.navbar-right
+				li
+					a.fa.fa-tasks.fa-2x
+				li
+					a.fa.fa-envelope-o.fa-2x
+				li
+					a #{user.displayName}
+				li
+					img(src="#{user.photo}" data-id="#{user.userID}" width="50px")
+	//- >>>>>>>> End Top Navbar <<<<<<<<
+
+	//- >>>>>>>> Sidebar <<<<<<<<
+	nav.sidebar-menu.hidden-sm.hidden-xs
+		.container-fluid
+			ul.nav
+				li
+					a Dashboard
+				li
+					a Teams
+						span.caret-right
+					p.h5.add Create Team
+				li
+					a Clients
+						span.caret-right
+					p.h5.add Add New Client
+				li
+					a Projects
+						span.caret-right
+					p.h5.add Add New Project
+					p.h5.prj.restore.hidden Restore Last Deleted Project
+				li
+					a Tasks
+						span.caret-right
+					p.h5.tsk.restore.hidden Restore Last Deleted Task
+
+	//- >>>>>>>> End Sidebar <<<<<<<<
+
+	//- >>>>>>>> Modal Templates <<<<<<<<
+	//- >>>>>>>> Team Entry Modal <<<<<<<<
+	.modal.fade(id="teamEntryModal" tabindex="-1" role="dialog")
+		.modal-dialog.modal-lg(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span &times;
+					h4.modal-title Create Team
+				.modal-body
+					form
+						.form-group
+							label(for="teamName") Team Name
+							input#teamName.form-control(type="text" placeholder="Enter a team name...")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+					button.btn.btn-primary(type="button") Save Team
+
+	//- >>>>>>>> Project Entry Form Modal <<<<<<<<
+	#projectEntryModal.modal.fade(tabindex="-1" role="dialog")
+		.modal-dialog.modal-lg(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span &times;
+					h4.modal-titleCreate New Project
+				.modal-body
+					form
+						.form-group.one-half
+							label(for="projectName") Project Name
+							input#projectName.form-control(type="text" placeholder="Enter a name for your new project...")
+						.form-group.one-third.pull-right
+							label(for="clientName") Client
+							select#clientID.form-control
+						.form-group
+							label(for="projectDescription") Project Description
+							input#projectDescription.form-control(type="text" placeholder="Please enter a description for your project...")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+					button.btn.btn-primary(type="button") Save this project
+	//- >>>>>>>> Task Entry Form Modal <<<<<<<< 
+	#taskEntryModal.modal.fade(tabindex="-1" role="dialog")
+		.modal-dialog.modal-lg(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span &times;
+					h4.modal-title Create New Task
+				.modal-body
+					form
+						.form-group
+							label(for="taskName") Task Name
+							input#taskName.form-control(type="text" placeholder="Enter a title for this task...")
+						.form-group
+							label(for="taskDescription") Task Description
+							input#taskDescription.form-control(type="text" placeholder="Please enter a description for this task...")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+					button.btn.btn-primary(type="button") Save this task
+	//- >>>>>>>> Client Entry Modal <<<<<<<< 
+	#clientEntryModal.modal.fade(tabindex="-1" role="dialog")
+		.modal-dialog.modal-lg(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span &times;
+					h4.modal-title Add New Client
+				.modal-body
+					form
+						.form-group
+							label(for="clientName") Client Name
+							input#clientName.form-control(type="text" placeholder="Enter the client name...")
+						.form-group
+							label(for="clientIcon") Client Logo
+							input#clientIcon.form-control(type="text" placeholder="Paste a link to a client logo...")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+					button.btn.btn-primary(type="button") Save Client
+
+	//- >>>>>>>> End Modal Templates <<<<<<<< 
+
+	//- >>>>>>>> Project Templates <<<<<<<<
+	//- >>>>>>>> Project Level Template <<<<<<<<
+	table.template
+		tbody
+			tr.project
+				td
+					h2.one-half Template - Name
+					img.pull-right(src="" width='175px')
+					h2.client.one-half.text-right.pull-right.collapse
+					h2
+						small
+							em Template - Description
+					table.table.table-striped.table-hover.tasks
+						tbody
+					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Project
+					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Add Task
+
+	//- >>>>>>>> Task Level Template <<<<<<<<
+	table.taskTemplate
+		tbody
+			tr.task
+				td
+					h4 Project 1 - Task Example 1
+					<h4><small><em>This is the description for task 1...</em></small></h4>
+					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Task
+
+	//- >>>>>>>> End Project Templates <<<<<<<<
+	
+	//- >>>>>>>> Main-Content <<<<<<<< 
+	.save-container
+		.main-content
+			table.table.table-striped.table-hover.projects
+				tbody
+
+block scripts
+	script(src="js/main.js")

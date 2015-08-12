@@ -1,0 +1,236 @@
+body {
+	padding-top: 60px;
+}
+
+.form-login p, a.signup {
+	color: grey;
+}
+
+a.signup {
+	text-decoration: underline;
+}
+
+a.signup:hover {
+	color: black;
+}
+
+.modal {
+	top: 15%;
+}
+
+nav .navbar-btn {
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+nav.sidebar-menu {
+	width: 15%;
+	height: 100%;
+	font-size: 1.5em;
+	text-align: left;
+	position: fixed;
+	top: 50px;
+	background-color: rgb(58, 63, 68);
+}
+
+nav.sidebar-menu .container-fluid {
+	padding: 0;
+}
+
+nav.sidebar-menu .active {
+	background-color: #272b2e;
+	padding-bottom: 1px;
+}
+
+.nav > li > a:focus, .navbar-default .navbar-nav > li a:focus {
+	background-color: transparent;
+}
+
+.sidebar-menu .caret {
+	margin-left: 15px;
+}
+
+.sidebar-menu .caret-right {
+	margin-left: 15px;
+	display: inline-block;
+    vertical-align: middle;
+    border-left: 4px dashed;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+}
+
+.sidebar-menu .h5 {
+	margin-left: 35px;
+	margin-top: 0;
+	display: none;
+}
+
+.main-content {
+	margin-left: 20%;
+	width: 75%;
+	min-height: 1000px;
+}
+
+table.tasks {
+	width: 85%;
+	margin-left: 5%;
+	display: none;
+	border: 1px solid black;
+}
+
+table.template {
+	display: none;
+}
+
+table.taskTemplate {
+	display: none;
+}
+
+td.demo {
+	padding: 10px;
+}
+
+tr.project > td > a {
+	opacity: 0;
+}
+
+tr.task > td > a {
+	opacity: 0;
+}
+
+/*tr.project img {
+	margin-bottom: 10px;
+}*/
+
+.client.collapse {
+	margin: 0;
+}
+
+.one-half {
+	width: 50%;
+	display: inline-block;
+}
+
+.one-third {
+	width: 33%;
+	display: inline-block;
+}
+
+.navbar-collapse.collapse {
+	display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+	float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+	margin-right: 0 !important;
+}
+
+.navbar-right {
+	float: right!important;
+}
+
+.window-shade {
+	position: fixed;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-color: grey;
+	opacity: 0;
+	z-index: 1;
+}
+
+.front-text img {
+	position: relative;
+	opacity: 0;
+	z-index: 5;
+}
+
+a.btn.btn-default.btn-lg.login {
+	position: relative;
+	width: 450px;
+	height: 70px;
+	margin: 40px 211px;
+	font-size: 2em;
+	z-index: 5;
+	opacity: 0;
+}
+
+.navbar-nav > li > a.icon {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/*LOGIN CONFIGURATION PAGE*/
+.form-login {
+	max-width: 330px;
+	margin: 100px auto 0;
+	background: #fff;
+	border-radius: 5px;
+}
+
+.form-login h2.form-login-heading {
+	padding: 25px 20px;
+	text-align: center;
+	background: #e39925;
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: 300;
+}
+
+.login-wrap {
+	padding: 20px;
+}
+
+.btn-theme {
+	color: #fff;
+	background-color: #e39925;
+	border-color: #b9762a;
+	margin-top: 20px;
+}
+
+.btn-theme:hover, .btn-theme:focus {
+	color: #fff;
+	background-color: #d18d23;
+	border-color: #d18d23;
+}
+
+.centered {
+	text-align: center;
+}
+
+.btn-facebook {
+	color: #fff;
+	background-color: #5193ea;
+	border-color: #2775e2;
+}
+
+.btn-facebook:hover, .btn-facebook:focus {
+	color: #fff;
+	background-color: #2775e2;
+	border-color: #2775e2;
+}
+
+.btn-google {
+	margin-left: 5px;
+	color: #fff;
+	background-color: #dd4b39;
+	border-color: #BD4031;
+}
+
+.btn-google:hover, .btn-google:focus {
+	color: #fff;
+	background-color: #BD4031;
+	border-color: #BD4031;
+}
+
+@media (max-width: 991px) {
+	.main-content {
+		margin-left: 0% !important;
+		width: 100% !important;
+	}
+}
