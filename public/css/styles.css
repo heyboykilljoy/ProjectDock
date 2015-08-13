@@ -112,7 +112,14 @@ tr.task > td > a {
 }
 
 .one-third {
-	width: 33%;
+	width: 32%;
+	margin-left: 1%;
+	display: inline-block;
+}
+
+.one-fourth {
+	width: 24%;
+	margin-left: 1%;
 	display: inline-block;
 }
 

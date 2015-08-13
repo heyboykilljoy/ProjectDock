@@ -51,6 +51,20 @@ block content
 	//- >>>>>>>> End Sidebar <<<<<<<<
 
 	//- >>>>>>>> Modal Templates <<<<<<<<
+	//- >>>>>>>> Task Detail Modal <<<<<<<<
+	#taskDetailModal.modal.fade(tabindex="-1" role="dialog")
+		.modal-dialog.modal-lg(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span &times;
+					h4#modalName.modal-title Modal title
+					h4#modalDesc.modal-title
+						small Modal title
+				.modal-body This is a test...
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") Close
+					button.btn.btn-primary(type="button") Save changes
 	//- >>>>>>>> Team Entry Modal <<<<<<<<
 	.modal.fade(id="teamEntryModal" tabindex="-1" role="dialog")
 		.modal-dialog.modal-lg(role="document")
@@ -100,9 +114,15 @@ block content
 					h4.modal-title Create New Task
 				.modal-body
 					form
-						.form-group
+						.form-group.one-half
 							label(for="taskName") Task Name
 							input#taskName.form-control(type="text" placeholder="Enter a title for this task...")
+						.form-group.one-fourth
+							label(for="fromDate") From
+							input#fromDate.form-control(type="text")
+						.form-group.one-fourth
+							label(for="toDate") To
+							input#toDate.form-control(type="text")
 						.form-group
 							label(for="taskDescription") Task Description
 							input#taskDescription.form-control(type="text" placeholder="Please enter a description for this task...")
@@ -153,8 +173,11 @@ block content
 		tbody
 			tr.task
 				td
-					h4 Project 1 - Task Example 1
-					<h4><small><em>This is the description for task 1...</em></small></h4>
+					h4.one-half Project 1 - Task Example 1
+					p.date-range.one-third.text-right.pull-right Date
+					h4
+						small
+							em This is the description for task 1...
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Task
 
 	//- >>>>>>>> End Project Templates <<<<<<<<
@@ -166,4 +189,6 @@ block content
 				tbody
 
 block scripts
+	script(src="js/jquery-ui.min.js")
 	script(src="js/main.js")
+

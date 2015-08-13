@@ -25,6 +25,9 @@ var userSchema = mongoose.Schema({
 	},
 	photo : {
 		type : String
+	},
+	projects : {
+		type : String
 	}
 });
 

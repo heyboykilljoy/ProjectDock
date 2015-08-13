@@ -40,8 +40,11 @@ $(document).on('ready', function() {
 	var workingProject;
 	var workingTask;
 
+	// Initialize Page Widgets
 	$("[data-toggle=popover]").popover({container : 'body'});
-	
+	$('#fromDate').datepicker();
+	$('#toDate').datepicker({defaultDate: "+1w"});
+
 	// Top Nav Bar Click Events
 	$('ul.navbar-nav li').on('click', function(){
 		if ($(this).hasClass('active')) {
@@ -188,11 +191,11 @@ $(document).on('ready', function() {
 		}
 	});
 
+	
 	// Task Click Events
 	$('.main-content').on('click', 'table.tasks tr', function(event){
 		var taskName = $(this).find('h4').first().text();
 		var taskDesc = $(this).find('h4').first().next().text();
-
 		event.stopPropagation();
 		
 		$('#modalName').text(taskName);
@@ -258,16 +261,21 @@ $(document).on('ready', function() {
 		var taskName = $('#taskName').val();
 		var taskDescription = $('#taskDescription').val();
 		var newTask = $('table.taskTemplate .task');
+		var fromDate = $('#fromDate').val();
+		var toDate = $('#toDate').val();
 
 		// Populate Task Template
 		newTask.find('h4').first().text(taskName);
 		newTask.find('em').first().text(taskDescription);
+		newTask.find('p.date-range').text(fromDate + ' to ' + toDate);
 		// Add Task Template Clone to Project Table Task Space
-		workingProject.find('table.tasks tbody').prepend(newTask.clone());
+		workingProject.find('table.tasks tbody').append(newTask.clone());
 		// Close Modal and Clear Form Data
 		$('#taskEntryModal').modal('toggle');
 		$('#taskName').val('');
 		$('#taskDescription').val('');
+		$('#fromDate').val('');
+		$('#toDate').val('');
 		// Save New Page State
 		setTimeout(pageState, 1000);
 	});
