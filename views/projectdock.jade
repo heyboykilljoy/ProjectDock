@@ -164,7 +164,7 @@ block content
 						small
 							em Template - Description
 					table.table.table-striped.table-hover.tasks
-						tbody
+						tbody#sortableTask
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Project
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Add Task
 
@@ -186,9 +186,9 @@ block content
 	.save-container
 		.main-content
 			table.table.table-striped.table-hover.projects
-				tbody
+				tbody#sortableProject
 
 block scripts
-	script(src="js/jquery-ui.min.js")
+	script(src="https://code.jquery.com/ui/1.11.4/jquery-ui.js")
 	script(src="js/main.js")
 

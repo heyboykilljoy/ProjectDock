@@ -42,8 +42,13 @@ $(document).on('ready', function() {
 
 	// Initialize Page Widgets
 	$("[data-toggle=popover]").popover({container : 'body'});
+	$("tbody#sortableProject").sortable({connectWith : "tbody#sortableProject"});
+	// $("#sortableProject").disableSelection();
+	$("tbody#sortableTask").sortable({connectWith : "tbody#sortableTask"});
+	// $("#sortableTask").disableSelection();
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
+
 
 	// Top Nav Bar Click Events
 	$('ul.navbar-nav li').on('click', function(){
@@ -278,6 +283,9 @@ $(document).on('ready', function() {
 		$('#toDate').val('');
 		// Save New Page State
 		setTimeout(pageState, 1000);
+		setTimeout(function(){
+			$("tbody#sortableTask").sortable({connectWith : "tbody#sortableTask"});
+		}, 2000);
 	});
 
 	// Client Entry Form
