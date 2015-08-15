@@ -61,8 +61,12 @@ block content
 					h4#modalName.modal-title Modal title
 					h4#modalDesc.modal-title
 						small Modal title
-				.modal-body This is a test...
+				.modal-body
+					textarea(rows="10" placeholder="Freeform notes can be kept here...")
 				.modal-footer
+					form
+						.form-group.one-fourth.pull-left.percentComplete
+							input#percentComplete.form-control(type="number" min="0" max="100" placeholder="New Percentage Complete...")
 					button.btn.btn-default(type="button" data-dismiss="modal") Close
 					button.btn.btn-primary(type="button") Save changes
 	//- >>>>>>>> Team Entry Modal <<<<<<<<
@@ -165,6 +169,9 @@ block content
 							em Template - Description
 					table.table.table-striped.table-hover.tasks
 						tbody#sortableTask
+					.progress.one-half
+						.progress-bar.progress-bar-success
+						.progress-bar.progress-bar-danger
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Project
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Add Task
 
@@ -178,6 +185,9 @@ block content
 					h4
 						small
 							em This is the description for task 1...
+					.progress.one-half
+						.progress-bar.progress-bar-success
+						.progress-bar.progress-bar-danger
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Task
 
 	//- >>>>>>>> End Project Templates <<<<<<<<

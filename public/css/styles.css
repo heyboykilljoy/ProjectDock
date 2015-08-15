@@ -2,6 +2,16 @@ body {
 	padding-top: 60px;
 }
 
+textarea {
+	width: 100%;
+	max-width: 100%;
+	height: 40%;
+}
+
+.percentComplete {
+	margin-bottom: 0;
+}
+
 .form-login p, a.signup {
 	color: grey;
 }
@@ -96,6 +106,11 @@ tr.project > td > a {
 
 tr.task > td > a {
 	opacity: 0;
+}
+
+.progress {
+	height: 5px;
+	margin-bottom: 0;
 }
 
 /*tr.project img {

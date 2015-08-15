@@ -1,3 +1,6 @@
+// Global Variables
+var selected;
+
 // Save page state in local storage
 var pageState = function(){
 		console.log("I be savin' data!");
@@ -42,12 +45,32 @@ $(document).on('ready', function() {
 
 	// Initialize Page Widgets
 	$("[data-toggle=popover]").popover({container : 'body'});
-	$("tbody#sortableProject").sortable({connectWith : "tbody#sortableProject"});
-	// $("#sortableProject").disableSelection();
-	$("tbody#sortableTask").sortable({connectWith : "tbody#sortableTask"});
-	// $("#sortableTask").disableSelection();
+	$("tbody#sortableProject").sortable({
+		connectWith : "tbody#sortableProject",
+		cursor : "move"
+	});
+	$("tbody#sortableTask").sortable({
+		connectWith : "tbody#sortableTask",
+		cursor: "move"
+	});
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
+
+	// Re-Calculate Task Progress
+	$('p.date-range').each(function(){
+		if($(this).text() !== "Date") {
+			var fromString = $(this).text().slice(0, 10);
+			var toString = $(this).text().slice(14, 25);
+			var currentPercentComplete = ($(this).parent().find('.progress-bar-success').width() / $(this).parent().find('.progress').width()) * 100;
+			var newPlannedTotal = new Date(toString) - new Date(fromString);
+			var newelapsedTime = new Date() - new Date(fromString);
+			var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
+
+			$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
+			$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%')
+		}	
+	});
+
 
 
 	// Top Nav Bar Click Events
@@ -144,12 +167,15 @@ $(document).on('ready', function() {
 		var activeProjectTasks = $(this).siblings('tr').find('table.tasks.active');
 
 		if (selectedProjectTasks.hasClass('active')) {
-			selectedProjectTasks.removeClass('active').fadeOut();
-	
-			setTimeout(pageState, 1000);
-
+			// $(this).children('td').children('.progress').fadeIn(100);
+			selectedProjectTasks.removeClass('active').fadeOut().animate({opacity : 0}, 100, function(){
+				$(this).parent().children('.progress').fadeIn(function(){
+					setTimeout(pageState, 1000);
+				});
+			});
 		}
 		else {
+			$(this).children('td').children('.progress').fadeOut(10);
 			selectedProjectTasks.addClass('active').fadeIn().animate({opacity : 1}, 100, function(){
 				pageState();
 			});
@@ -159,8 +185,9 @@ $(document).on('ready', function() {
 			$(this).find('table.tasks').siblings('a.btn').animate({
 				opacity : 1
 			}, 100);
-
-			activeProjectTasks.removeClass('active').fadeOut();
+			activeProjectTasks.removeClass('active').fadeOut(function(){
+				$(this).parent().children('.progress').fadeIn();
+			});
 		}
 	});
 
@@ -200,12 +227,45 @@ $(document).on('ready', function() {
 	// Task Click Events
 	$('.main-content').on('click', 'table.tasks tr', function(event){
 		var taskName = $(this).find('h4').first().text();
-		var taskDesc = $(this).find('h4').first().next().text();
+		var taskDesc = $(this).find('h4').first().siblings('h4').text();
 		event.stopPropagation();
+
+		// Assign to Global variable "selected"
+		selected = $(this);
+		console.log($(this));
 		
 		$('#modalName').text(taskName);
 		$('#modalDesc').html('<small><em>' + taskDesc + '</em></small>');
 		$('#taskDetailModal').modal();
+	});
+
+	// Task Detail Modal Events
+	$('#taskDetailModal .btn-primary').on('click', function(){
+		var percentComplete = $('#percentComplete').val();
+		// Assign the task that triggered this modal
+		var selectedTask = selected;
+		var plannedPercentComplete = $(selectedTask).find('.progress-bar-danger').text();
+
+		// Populate Task Percentage Complete Progress
+		if(percentComplete > plannedPercentComplete) {
+			console.log('Ahead of Schedule');
+			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%');
+			$(selectedTask).find('.progress-bar-danger').width('0');
+		}
+		else {
+			console.log('Behind Schedule');
+			if (!percentComplete) {
+				percentComplete = ($(selectedTask).find('.progress-bar-success').width() / $(selectedTask).find('.progress').width()) * 100;
+			}
+			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%');
+			$(selectedTask).find('.progress-bar-danger').width((plannedPercentComplete - percentComplete) + '%');
+		}
+
+		// Close Modal and Clear Form Data
+		$('#taskDetailModal').modal('toggle');
+		$('#percentComplete').val('');
+		// Save New Page State
+		setTimeout(pageState, 1000);
 	});
 
 	// Task Button Click Events
@@ -268,6 +328,15 @@ $(document).on('ready', function() {
 		var newTask = $('table.taskTemplate .task');
 		var fromDate = $('#fromDate').val();
 		var toDate = $('#toDate').val();
+		var totalTime = new Date(toDate) - new Date(fromDate);
+		var elapsedTime = new Date() - new Date(fromDate);
+		var plannedComplete = (elapsedTime / totalTime) * 100;
+
+		// Populate Current Planned Task Progress
+		if (totalTime === 0) {
+			$(newTask).find('.progress-bar-danger').width('0%').text('0');
+		}
+			$(newTask).find('.progress-bar-danger').width(plannedComplete + '%').text(plannedComplete);
 
 		// Populate Task Template
 		newTask.find('h4').first().text(taskName);
@@ -284,7 +353,10 @@ $(document).on('ready', function() {
 		// Save New Page State
 		setTimeout(pageState, 1000);
 		setTimeout(function(){
-			$("tbody#sortableTask").sortable({connectWith : "tbody#sortableTask"});
+			$("tbody#sortableTask").sortable({
+				connectWith : "tbody#sortableTask",
+				cursor : "move"
+			});
 		}, 2000);
 	});
 
