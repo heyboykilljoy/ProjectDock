@@ -44,7 +44,7 @@ passport.use(localStrategy);
 passport.use(new FacebookStrategy({
     	clientID 	  : configVars.facebookClientID,
     	clientSecret  : configVars.facebookClientSecret,
-    	callbackURL	  : "http://localhost:3000/auth/facebook/callback",
+    	callbackURL	  : "/auth/facebook/callback",
     	profileFields : ['id', 'displayName', 'name','photos', 'emails']
 	},
   
@@ -79,7 +79,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GoogleStrategy({
 		clientID	 : configVars.googleClientID,
 		clientSecret : configVars.googleClientSecret,
-		callbackURL  : 'http://localhost:3000/auth/google/callback'
+		callbackURL  : '/auth/google/callback'
 	},
 
 	function(accessToken, refreshToken, profile, done) {

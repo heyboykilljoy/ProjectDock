@@ -5,7 +5,6 @@ var selected;
 var pageState = function(){
 	console.log("I be savin' data!");
 	var pageSave = $('.save-container').html();
-	// console.log(pageSave)
 	$.ajax({
 		method 	: 'POST',
 		url		: '/db',
@@ -17,7 +16,6 @@ var loadPage = function(data){
 	if(data){
 		$('.save-container').html(data);
 	}
-	// console.log(data);
 };
 
 var loadSortable = function(){
@@ -70,9 +68,6 @@ $(document).on('ready', function() {
 	clientList = JSON.parse(localStorage["clients"]);
 	
 	pageRetrieve();
-	// if (localStorage.getItem('projectPageState') !== null && localStorage.getItem('projectPageState') !== 'undefined') {
-	// 	$('.save-container').html(JSON.parse(localStorage["projectPageState"]));
-	// }	
 
 	var workingProject;
 	var workingTask;
@@ -82,25 +77,28 @@ $(document).on('ready', function() {
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
 
-	// $('.modal-body').notebook({
-	// 	placeholder: 'Your text here...',
-	// 	mode: 'multiline', // // multiline or inline
-	// 	modifiers: ['bold', 'italic', 'underline', 'h1', 'h2', 'ol', 'ul', 'anchor']
-	// });
+	$('.modal-body.notes').notebook({
+		autoFocus : false,
+		placeholder : 'Your text here...',
+		mode : 'multiline', // // multiline or inline
+		modifiers : ['bold', 'italic', 'underline', 'h1', 'h2', 'ol', 'ul', 'anchor']
+	});
 
-	// Re-Calculate Task Progress
-	$('p.date-range').each(function(){
-		if($(this).text() !== "Date") {
-			var fromString = $(this).text().slice(0, 10);
-			var toString = $(this).text().slice(14, 25);
-			var currentPercentComplete = ($(this).parent().find('.progress-bar-success').width() / $(this).parent().find('.progress').width()) * 100;
-			var newPlannedTotal = new Date(toString) - new Date(fromString);
-			var newelapsedTime = new Date() - new Date(fromString);
-			var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
+	// Re-Calculate Task Progress Once Saved Page Load is Complete
+	$(document).ajaxComplete(function(){
+		$('p.date-range').each(function(index){
+			if($(this).text() !== "Date") {
+				var fromString = $(this).text().slice(0, 10);
+				var toString = $(this).text().slice(14, 25);
+				var currentPercentComplete = ($(this).parent().find('.progress-bar-success').width() / $(this).parent().find('.progress').width()) * 100;
+				var newPlannedTotal = new Date(toString) - new Date(fromString);
+				var newelapsedTime = new Date() - new Date(fromString);
+				var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
 
-			$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
-			$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
-		}	
+				$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
+				$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
+			}	
+		});
 	});
 
 	// Top Nav Bar Click Events
@@ -262,14 +260,26 @@ $(document).on('ready', function() {
 
 		// Assign to Global variable "selected"
 		selected = $(this);
-		// console.log($(this));
-		
+
 		$('#modalName').text(taskName);
 		$('#modalDesc').html('<small><em>' + taskDesc + '</em></small>');
 		$('#taskDetailModal').modal();
+		if ($(this).find('.notes-container').children().length !== 0){
+			$(this).find('.notes-container').children().appendTo('.modal-body.notes');
+		};
+
 	});
 
 	// Task Detail Modal Events
+	$('#taskDetailModal .btn-default').on('click', function(){
+		var selectedTask = selected;
+
+		selectedTask.find('.notes-container').append($('.modal-body.notes').html());
+		$('.modal-body.notes').empty();
+
+		setTimeout(pageState, 1000);
+	});
+
 	$('#taskDetailModal .btn-primary').on('click', function(){
 		var percentComplete = $('#percentComplete').val();
 		// Assign the task that triggered this modal
@@ -291,9 +301,12 @@ $(document).on('ready', function() {
 			$(selectedTask).find('.progress-bar-danger').width((plannedPercentComplete - percentComplete) + '%');
 		}
 
+		selectedTask.find('.notes-container').append($('.modal-body.notes').html());
+
 		// Close Modal and Clear Form Data
 		$('#taskDetailModal').modal('toggle');
 		$('#percentComplete').val('');
+		$('.modal-body.notes').empty();
 		// Save New Page State
 		setTimeout(pageState, 1000);
 	});

@@ -1,7 +1,3 @@
-.ui-sortable-helper {
-    display: table;
-}
-
 body {
 	padding-top: 60px;
 }
@@ -16,13 +12,21 @@ textarea {
 	margin-top: 0 !important;
 }
 
-.jquery-notebook.bubble {
-	left: -155px;
+/*.jquery-notebook.bubble {
+	left: -50%;
     top: -175px;
 }
-
+*/
 .jquery-notebook.editor {
 	min-height: 250px;
+}
+
+.jquery-notebook.editor a {
+	color: #e39925;
+}
+
+.ui-sortable-helper {
+    display: table;
 }
 
 .percentComplete {

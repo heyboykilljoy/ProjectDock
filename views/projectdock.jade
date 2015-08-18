@@ -4,6 +4,7 @@ block content
 	//- >>>>>>>> Top Navbar <<<<<<<<
 	nav.navbar.navbar-default.navbar-fixed-top
 		.container-fluid
+
 			ul.nav.navbar-nav
 				li.active
 					a.fa.fa-bars.fa-2x
@@ -61,7 +62,7 @@ block content
 					h4#modalName.modal-title Modal title
 					h4#modalDesc.modal-title
 						small Modal title
-				.modal-body
+				.modal-body.notes
 					//- textarea(rows="10" placeholder="Freeform notes can be kept here...")
 				.modal-footer
 					form
@@ -189,11 +190,11 @@ block content
 						.progress-bar.progress-bar-success
 						.progress-bar.progress-bar-danger
 					a.btn.btn-default.btn-xs.pull-right(href="#" role="button") Delete Task
+					.notes-container.hidden
 
 	//- >>>>>>>> End Project Templates <<<<<<<<
 	
 	//- >>>>>>>> Main-Content <<<<<<<< 
-	
 	.save-container
 		.main-content
 			table.table.table-striped.table-hover.projects
@@ -201,6 +202,6 @@ block content
 
 block scripts
 	script(src="https://code.jquery.com/ui/1.11.4/jquery-ui.js")
-	script(src="js/jquery.notebook.min.js")
+	script(src="js/jquery.notebook.js")
 	script(src="js/main.js")
 
