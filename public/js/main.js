@@ -351,11 +351,11 @@ $(document).on('ready', function() {
 		newProject.find('em').first().text(projectDesc);
 
 		if (clientList[clientImg].logoPath && clientList[clientImg].logoPath !== ""){
-			newProject.find('img').attr("src", clientList[clientImg].logoPath);
+			newProject.find('img').attr("src", clientList[clientImg].logoPath).removeClass('collapse');
 			newProject.find('.client').addClass('collapse');
 		}
 		else {
-			newProject.find('img').removeAttr("src");
+			newProject.find('img').removeAttr("src").addClass('collapse');
 			newProject.find('.client').removeClass('collapse').text(clientName);
 		}
 		// Add Project Template Clone to Main Table Body

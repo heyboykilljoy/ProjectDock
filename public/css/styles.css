@@ -12,11 +12,6 @@ textarea {
 	margin-top: 0 !important;
 }
 
-/*.jquery-notebook.bubble {
-	left: -50%;
-    top: -175px;
-}
-*/
 .jquery-notebook.editor {
 	min-height: 250px;
 }
@@ -139,7 +134,7 @@ tr.task > td > a {
 	margin-bottom: 0;
 }
 
-tr.project img, tr.task p.pull-right {
+tr.project img, tr.task p.pull-right, h2.client.one-half {
 	margin: 10px 15px 10px 0;
 }
 
@@ -150,6 +145,10 @@ tr.project img, tr.task p.pull-right {
 .one-half {
 	width: 50%;
 	display: inline-block;
+}
+
+h2.one-half.pull-right {
+	width: 40%;
 }
 
 h2.one-half, h2 small, h4.one-half, h4 small, .progress.one-half {
