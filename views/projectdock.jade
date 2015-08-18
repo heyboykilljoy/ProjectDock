@@ -21,7 +21,7 @@ block content
 				li
 					a #{user.displayName}
 				li
-					img(src="#{user.photo}" data-id="#{user.userID}" width="50px")
+					img.user(src="#{user.photo}" data-id="#{user.userID}" width="50px")
 	//- >>>>>>>> End Top Navbar <<<<<<<<
 
 	//- >>>>>>>> Sidebar <<<<<<<<
@@ -62,11 +62,11 @@ block content
 					h4#modalDesc.modal-title
 						small Modal title
 				.modal-body
-					textarea(rows="10" placeholder="Freeform notes can be kept here...")
+					//- textarea(rows="10" placeholder="Freeform notes can be kept here...")
 				.modal-footer
 					form
 						.form-group.one-fourth.pull-left.percentComplete
-							input#percentComplete.form-control(type="number" min="0" max="100" placeholder="New Percentage Complete...")
+							input#percentComplete.form-control(type="number" min="0" max="100" placeholder="Percentage Complete...")
 					button.btn.btn-default(type="button" data-dismiss="modal") Close
 					button.btn.btn-primary(type="button") Save changes
 	//- >>>>>>>> Team Entry Modal <<<<<<<<
@@ -193,6 +193,7 @@ block content
 	//- >>>>>>>> End Project Templates <<<<<<<<
 	
 	//- >>>>>>>> Main-Content <<<<<<<< 
+	
 	.save-container
 		.main-content
 			table.table.table-striped.table-hover.projects
@@ -200,5 +201,6 @@ block content
 
 block scripts
 	script(src="https://code.jquery.com/ui/1.11.4/jquery-ui.js")
+	script(src="js/jquery.notebook.min.js")
 	script(src="js/main.js")
 

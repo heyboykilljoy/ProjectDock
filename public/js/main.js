@@ -1,10 +1,44 @@
 // Global Variables
 var selected;
 
-// Save page state in local storage
+// Save page state with the user in the databaase
 var pageState = function(){
-		console.log("I be savin' data!");
-		localStorage["projectPageState"] = JSON.stringify($('.save-container').html());
+	console.log("I be savin' data!");
+	var pageSave = $('.save-container').html();
+	// console.log(pageSave)
+	$.ajax({
+		method 	: 'POST',
+		url		: '/db',
+		data	: {data : pageSave}
+	});
+};
+
+var loadPage = function(data){
+	if(data){
+		$('.save-container').html(data);
+	}
+	// console.log(data);
+};
+
+var loadSortable = function(){
+	$("tbody#sortableProject").sortable({
+		connectWith : "tbody#sortableProject",
+		cursor : "move"
+	});
+	$("tbody#sortableTask").sortable({
+		connectWith : "tbody#sortableTask",
+		cursor: "move"
+	});
+}
+
+var pageRetrieve = function(){
+	console.log('Loading Saved Data');
+	$.ajax({
+		method 	: 'GET',
+		url   	: '/db',
+		success : loadPage,
+		complete: loadSortable
+	});
 };
 
 var clientList = [];
@@ -24,7 +58,6 @@ var storedClientList = [{
 	name : "Western Nephrology",
 	logoPath : "img/western.png"
 }];
-var storedPageState;
 
 $(document).on('ready', function() {
 
@@ -36,25 +69,24 @@ $(document).on('ready', function() {
 
 	clientList = JSON.parse(localStorage["clients"]);
 	
-	if (localStorage.getItem('projectPageState') !== null && localStorage.getItem('projectPageState') !== 'undefined') {
-		$('.save-container').html(JSON.parse(localStorage["projectPageState"]));
-	}	
+	pageRetrieve();
+	// if (localStorage.getItem('projectPageState') !== null && localStorage.getItem('projectPageState') !== 'undefined') {
+	// 	$('.save-container').html(JSON.parse(localStorage["projectPageState"]));
+	// }	
 
 	var workingProject;
 	var workingTask;
 
 	// Initialize Page Widgets
 	$("[data-toggle=popover]").popover({container : 'body'});
-	$("tbody#sortableProject").sortable({
-		connectWith : "tbody#sortableProject",
-		cursor : "move"
-	});
-	$("tbody#sortableTask").sortable({
-		connectWith : "tbody#sortableTask",
-		cursor: "move"
-	});
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
+
+	// $('.modal-body').notebook({
+	// 	placeholder: 'Your text here...',
+	// 	mode: 'multiline', // // multiline or inline
+	// 	modifiers: ['bold', 'italic', 'underline', 'h1', 'h2', 'ol', 'ul', 'anchor']
+	// });
 
 	// Re-Calculate Task Progress
 	$('p.date-range').each(function(){
@@ -67,11 +99,9 @@ $(document).on('ready', function() {
 			var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
 
 			$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
-			$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%')
+			$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
 		}	
 	});
-
-
 
 	// Top Nav Bar Click Events
 	$('ul.navbar-nav li').on('click', function(){
@@ -83,7 +113,7 @@ $(document).on('ready', function() {
 				$('.sidebar-menu .container-fluid').fadeOut(100);
 				$('.sidebar-menu').animate({width: '0%'});
 				$('.main-content').animate({width: '90%', marginLeft: '5%'}, function(){
-					pageState();
+					// pageState();
 				});
 			}
 		}
@@ -99,7 +129,7 @@ $(document).on('ready', function() {
 				$('.navbar-right').children('li.active').removeClass('active');
 				$('.sidebar-menu').animate({width: '15%'}, function(){
 					$('.sidebar-menu .container-fluid').fadeIn().animate({opacity: 1}, 200, function(){
-						pageState();
+						// pageState();
 					});
 				});
 				$('.main-content').animate({width: '75%', marginLeft: '20%'});
@@ -122,7 +152,7 @@ $(document).on('ready', function() {
 			$(this).find('.caret-right').removeClass('caret-right').addClass('caret');
 		}
 
-		setTimeout(pageState, 1000);
+		// setTimeout(pageState, 1000);
 	});
 
 	$('.sidebar-menu li > p').on('click', function(event){
@@ -161,8 +191,8 @@ $(document).on('ready', function() {
 		}
 	});
 
-	// Project Click Events - Delegated to main-content div
-	$('.main-content').on('click', 'table.projects tr.project', function(){
+	// Project Click Events - Delegated to save-container div
+	$('.save-container').on('click', 'table.projects tr.project', function(){
 		var selectedProjectTasks = $(this).find('table.tasks');
 		var activeProjectTasks = $(this).siblings('tr').find('table.tasks.active');
 
@@ -192,7 +222,7 @@ $(document).on('ready', function() {
 	});
 
 	// Project Button Clicks
-	$('.main-content').on('click', 'table.projects tr.project > td > .btn', function( event ){
+	$('.save-container').on('click', 'table.projects tr.project > td > .btn', function( event ){
 
 		event.stopPropagation();
 
@@ -225,14 +255,14 @@ $(document).on('ready', function() {
 
 	
 	// Task Click Events
-	$('.main-content').on('click', 'table.tasks tr', function(event){
+	$('.save-container').on('click', 'table.tasks tr', function(event){
 		var taskName = $(this).find('h4').first().text();
 		var taskDesc = $(this).find('h4').first().siblings('h4').text();
 		event.stopPropagation();
 
 		// Assign to Global variable "selected"
 		selected = $(this);
-		console.log($(this));
+		// console.log($(this));
 		
 		$('#modalName').text(taskName);
 		$('#modalDesc').html('<small><em>' + taskDesc + '</em></small>');
@@ -269,7 +299,7 @@ $(document).on('ready', function() {
 	});
 
 	// Task Button Click Events
-	$('.main-content').on('click', 'table.tasks .btn', function(event){
+	$('.save-container').on('click', 'table.tasks .btn', function(event){
 
 		event.stopPropagation();
 
@@ -380,20 +410,20 @@ $(document).on('ready', function() {
 
 	// Animate buttons on hover
 	// Project Button Show
-	$('.main-content').on('mouseenter', 'tr.project', function(){
+	$('.save-container').on('mouseenter', 'tr.project', function(){
 		$(this).find('table.tasks').siblings('a.btn').animate({opacity : 1}, 200);
 	});
 
-	$('.main-content').on('mouseleave', 'tr.project', function(){
+	$('.save-container').on('mouseleave', 'tr.project', function(){
 		$(this).find('.btn').animate({opacity : 0}, 200);
 	});
 
 	// Task Button Show
-	$('.main-content').on('mouseenter', 'tr.task', function(){
+	$('.save-container').on('mouseenter', 'tr.task', function(){
 		$(this).find('a').animate({opacity : 1}, 200);
 	});
 
-	$('.main-content').on('mouseleave', 'tr.task', function(){
+	$('.save-container').on('mouseleave', 'tr.task', function(){
 		$(this).find('a').animate({opacity : 0}, 200);
 	});
 

@@ -8,6 +8,7 @@ var passport = require('passport');
 var passportConfig = require('./config/passport');
 var startupController = require('./controllers/startup.js');
 var authenticationController = require('./controllers/authentication');
+var apiController = require('./controllers/api');
 
 var app = express();
 app.set('view engine', 'jade');
@@ -46,6 +47,8 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 app.use(passportConfig.ensureAuthenticated);
 
 app.get('/app', startupController.app);
+app.get('/db', apiController.pageRetrieve);
+app.post('/db', apiController.pageSave);
 
 var server = app.listen(3000, function() {
 	console.log('Express server listening on port ' + server.address().port);

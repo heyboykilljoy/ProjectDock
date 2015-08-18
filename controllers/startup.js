@@ -6,7 +6,7 @@ var startupController = {
 		res.render('login');
 	},
 	app: function(req, res) {
-		console.log(req.user)
+		// console.log(req.user)
 		res.render('projectdock', {user: req.user});
 	},
 	signup: function(req, res) {
