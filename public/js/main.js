@@ -90,7 +90,12 @@ $(document).on('ready', function() {
 			if($(this).text() !== "Date") {
 				var fromString = $(this).text().slice(0, 10);
 				var toString = $(this).text().slice(14, 25);
-				var currentPercentComplete = ($(this).parent().find('.progress-bar-success').width() / $(this).parent().find('.progress').width()) * 100;
+				var currentPercentComplete = $(this).parent().find('.progress-bar-success').text()
+				console.log('Success pixels = ' + $(this).parent().find('.progress-bar-success').width())
+				console.log('Total pixels = ' + $(this).parent().find('.progress').width())
+
+				console.log(currentPercentComplete);
+
 				var newPlannedTotal = new Date(toString) - new Date(fromString);
 				var newelapsedTime = new Date() - new Date(fromString);
 				var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
@@ -297,7 +302,7 @@ $(document).on('ready', function() {
 			if (!percentComplete) {
 				percentComplete = ($(selectedTask).find('.progress-bar-success').width() / $(selectedTask).find('.progress').width()) * 100;
 			}
-			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%');
+			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%').text(percentComplete);
 			$(selectedTask).find('.progress-bar-danger').width((plannedPercentComplete - percentComplete) + '%');
 		}
 
