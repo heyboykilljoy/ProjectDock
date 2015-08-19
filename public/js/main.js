@@ -4,13 +4,14 @@ var selected;
 // Message Retrieval
 var getMessages = function(){
 	var message = function(data){
-		console.log(data);
+		// console.log(data);
 		if(data !== "OK") {
 			$('.badge').text('!');
+			$("[data-toggle=popover]").data('bs.popover').options.content = '<i class="fa fa-comment-o fa-2x pull-right"></i><br />' + data;
 			console.log('Message Received');
 		}
 		else {
-			console.log('No Message');
+			// console.log('No Message');
 		}
 	};
 	$.ajax({
@@ -78,12 +79,6 @@ var storedClientList = [{
 
 $(document).on('ready', function() {
 
-	// Message Retrieval System
-	getMessages();
-	setInterval(function(){
-		getMessages();
-	}, 20000)
-
 	// Load localStorage if it exist - Otherwise load dummy data
 	if (localStorage.getItem('clients') === null ) {
 		localStorage['clients'] = JSON.stringify(storedClientList);
@@ -98,7 +93,10 @@ $(document).on('ready', function() {
 	var workingTask;
 
 	// Initialize Page Widgets
-	$("[data-toggle=popover]").popover({container : 'body'});
+	$("[data-toggle=popover]").popover({
+		container : 'body',
+		content : 'Waiting...'
+	});
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
 
@@ -108,6 +106,12 @@ $(document).on('ready', function() {
 		mode : 'multiline', // // multiline or inline
 		modifiers : ['bold', 'italic', 'underline', 'h1', 'h2', 'ol', 'ul', 'anchor']
 	});
+	
+	// Message Retrieval System
+	getMessages();
+	setInterval(function(){
+		getMessages();
+	}, 20000)
 
 	// Re-Calculate Task Progress Once Saved Page Load is Complete
 	$(document).ajaxComplete(function(){

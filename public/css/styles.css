@@ -15,6 +15,10 @@ textarea {
     top: 5px;
 }
 
+.fa-comment-o {
+	margin-left: 10px;
+}
+
 .jquery-notebook.bubble button {
 	margin-top: 0 !important;
 }
