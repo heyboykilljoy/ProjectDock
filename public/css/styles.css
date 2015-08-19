@@ -8,6 +8,13 @@ textarea {
 	height: 40%;
 }
 
+.badge {
+	background-color: red;
+    position: absolute;
+    left: 35px;
+    top: 5px;
+}
+
 .jquery-notebook.bubble button {
 	margin-top: 0 !important;
 }

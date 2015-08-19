@@ -9,6 +9,7 @@ var passportConfig = require('./config/passport');
 var startupController = require('./controllers/startup.js');
 var authenticationController = require('./controllers/authentication');
 var apiController = require('./controllers/api');
+var twilioController = require('./controllers/twilio');
 
 var app = express();
 app.set('view engine', 'jade');
@@ -26,7 +27,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', startupController.index);
-app.post('/sms/pdrec', startupController.text);
+app.post('/sms/pdrec', twilioController.text);
+app.post('/sms/get', twilioController.getMessage);
 app.get('/login', authenticationController.login);
 app.post('/login', authenticationController.processLogin);
 app.get('/signup', startupController.signup);
@@ -51,6 +53,6 @@ app.get('/app', startupController.app);
 app.get('/db', apiController.pageRetrieve);
 app.post('/db', apiController.pageSave);
 
-var server = app.listen(80, function() {
+var server = app.listen(3000, function() {
 	console.log('Express server listening on port ' + server.address().port);
 });

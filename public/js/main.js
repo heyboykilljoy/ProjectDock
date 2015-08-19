@@ -1,6 +1,25 @@
 // Global Variables
 var selected;
 
+// Message Retrieval
+var getMessages = function(){
+	var message = function(data){
+		console.log(data);
+		if(data !== "OK") {
+			$('.badge').text('!');
+			console.log('Message Received');
+		}
+		else {
+			console.log('No Message');
+		}
+	};
+	$.ajax({
+		method	: 'POST',
+		url 	: '/sms/get',
+		success : message
+	});
+}
+
 // Save page state with the user in the databaase
 var pageState = function(){
 	console.log("I be savin' data!");
@@ -59,6 +78,12 @@ var storedClientList = [{
 
 $(document).on('ready', function() {
 
+	// Message Retrieval System
+	getMessages();
+	setInterval(function(){
+		getMessages();
+	}, 20000)
+
 	// Load localStorage if it exist - Otherwise load dummy data
 	if (localStorage.getItem('clients') === null ) {
 		localStorage['clients'] = JSON.stringify(storedClientList);
@@ -91,10 +116,10 @@ $(document).on('ready', function() {
 				var fromString = $(this).text().slice(0, 10);
 				var toString = $(this).text().slice(14, 25);
 				var currentPercentComplete = $(this).parent().find('.progress-bar-success').text()
-				console.log('Success pixels = ' + $(this).parent().find('.progress-bar-success').width())
-				console.log('Total pixels = ' + $(this).parent().find('.progress').width())
+				// console.log('Success pixels = ' + $(this).parent().find('.progress-bar-success').width())
+				// console.log('Total pixels = ' + $(this).parent().find('.progress').width())
 
-				console.log(currentPercentComplete);
+				// console.log(currentPercentComplete);
 
 				var newPlannedTotal = new Date(toString) - new Date(fromString);
 				var newelapsedTime = new Date() - new Date(fromString);
@@ -126,6 +151,7 @@ $(document).on('ready', function() {
 				$(this).removeClass('active');
 			}
 			$(this).children('.fa-envelope-o').popover('show');
+			$(this).children('.fa-envelope-o').children('.badge').text('');
 			$(this).siblings('li.active').removeClass('active');
 			// Sidebar Hamburger - Deavtivate other Top Nav Elements and Show Sidebar
 			if($(this).children('a').hasClass('fa-bars')) {
