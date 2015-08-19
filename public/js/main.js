@@ -128,9 +128,9 @@ $(document).on('ready', function() {
 				var newPlannedTotal = new Date(toString) - new Date(fromString);
 				var newelapsedTime = new Date() - new Date(fromString);
 				var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
-
-				$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
-				$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
+				
+				// $(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
+				// $(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
 			}	
 		});
 	});
@@ -319,11 +319,12 @@ $(document).on('ready', function() {
 		var percentComplete = $('#percentComplete').val();
 		// Assign the task that triggered this modal
 		var selectedTask = selected;
-		var plannedPercentComplete = $(selectedTask).find('.progress-bar-danger').text();
+		var plannedPercentComplete = parseFloat($(selectedTask).find('.progress-bar-danger').text());
 
 		// Populate Task Percentage Complete Progress
 		if(percentComplete > plannedPercentComplete) {
-			console.log('Ahead of Schedule');
+			// console.log('Ahead of Schedule');
+			// console.log(percentComplete + ' is greater than ' + plannedPercentComplete);
 			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%');
 			$(selectedTask).find('.progress-bar-danger').width('0');
 		}
@@ -332,10 +333,16 @@ $(document).on('ready', function() {
 			if (!percentComplete) {
 				percentComplete = ($(selectedTask).find('.progress-bar-success').width() / $(selectedTask).find('.progress').width()) * 100;
 			}
+			if (plannedPercentComplete > 100){
+				var overage = plannedPercentComplete - 100;
+				// console.log(overage)
+				$(selectedTask).find('.progress-bar-danger').width((plannedPercentComplete - percentComplete - overage) + '%');
+			}
+			else {
+				$(selectedTask).find('.progress-bar-danger').width((plannedPercentComplete - percentComplete) + '%');
+			}
 			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%').text(percentComplete);
-			$(selectedTask).find('.progress-bar-danger').width((plannedPercentComplete - percentComplete) + '%');
 		}
-
 		selectedTask.find('.notes-container').append($('.modal-body.notes').html());
 
 		// Close Modal and Clear Form Data
