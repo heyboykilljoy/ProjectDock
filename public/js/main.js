@@ -352,7 +352,7 @@ $(document).on('ready', function() {
 
 		if (clientList[clientImg].logoPath && clientList[clientImg].logoPath !== ""){
 			newProject.find('img').attr("src", clientList[clientImg].logoPath).removeClass('collapse');
-			newProject.find('.client').addClass('collapse');
+			newProject.find('.client').addClass('collapse').empty();
 		}
 		else {
 			newProject.find('img').removeAttr("src").addClass('collapse');
