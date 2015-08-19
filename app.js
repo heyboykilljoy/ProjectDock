@@ -26,6 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', startupController.index);
+app.post('/sms/pdrec', startupController.text);
 app.get('/login', authenticationController.login);
 app.post('/login', authenticationController.processLogin);
 app.get('/signup', startupController.signup);

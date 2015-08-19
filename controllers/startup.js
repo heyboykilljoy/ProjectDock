@@ -11,6 +11,10 @@ var startupController = {
 	},
 	signup: function(req, res) {
 		res.render('signup');
+	},
+	text: function(req, res) {
+		console.log(req.body);
+		res.send(200);
 	}
 };
 
