@@ -16,10 +16,11 @@ block content
 
 			ul.nav.navbar-nav.navbar-right
 				li
-					a.fa.fa-tasks.fa-2x
+					a.urgent.fa.fa-tasks.fa-2x(tabindex="0" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-html="true" data-title="Urgent Tasks")
+						span.badge.urgent
 				li
 					a.message.fa.fa-envelope-o.fa-2x(tabindex="0" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-html="true" data-title="Messages")
-						span.badge
+						span.badge.message
 				li
 					a #{user.displayName}
 				li

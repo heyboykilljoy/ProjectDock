@@ -6,7 +6,7 @@ var getMessages = function(){
 	var message = function(data){
 		// console.log(data);
 		if(data !== "OK") {
-			$('.badge').text('!');
+			$('.badge.message').text('!');
 			$('.message').data('bs.popover').options.content = '<i class="fa fa-comment-o fa-2x pull-right"></i><br />' + data;
 			console.log('Message Received');
 		}
@@ -88,6 +88,8 @@ $(document).on('ready', function() {
 	clientList = JSON.parse(localStorage["clients"]);
 	
 	pageRetrieve();
+	$('.badge.urgent').text(2);
+
 
 	var workingProject;
 	var workingTask;
@@ -96,6 +98,10 @@ $(document).on('ready', function() {
 	$('.message').popover({
 		container : 'body',
 		content : 'Waiting...'
+	});
+	$('.urgent').popover({
+		container : 'body',
+		content : '<p><strong>Overdue</strong> - Final Project</p><p><strong>Behind</strong> - Final Project</p>'
 	});
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
@@ -151,11 +157,13 @@ $(document).on('ready', function() {
 		}
 		else {
 			$(this).addClass('active');
-			if ($(this).children('a').hasClass('fa-envelope-o')) {
+			if ($(this).children('a').hasClass('fa-envelope-o') || $(this).children('a').hasClass('fa-tasks')) {
 				$(this).removeClass('active');
 			}
 			$(this).children('.fa-envelope-o').popover('show');
+			$(this).children('.fa-tasks').popover('show');
 			$(this).children('.fa-envelope-o').children('.badge').text('');
+			$(this).children('.fa-tasks').children('.badge').text('');
 			$(this).siblings('li.active').removeClass('active');
 			// Sidebar Hamburger - Deavtivate other Top Nav Elements and Show Sidebar
 			if($(this).children('a').hasClass('fa-bars')) {
