@@ -90,7 +90,6 @@ $(document).on('ready', function() {
 	pageRetrieve();
 	$('.badge.urgent').text(2);
 
-
 	var workingProject;
 	var workingTask;
 
