@@ -7,7 +7,7 @@ var getMessages = function(){
 		// console.log(data);
 		if(data !== "OK") {
 			$('.badge').text('!');
-			$("[data-toggle=popover]").data('bs.popover').options.content = '<i class="fa fa-comment-o fa-2x pull-right"></i><br />' + data;
+			$('.message').data('bs.popover').options.content = '<i class="fa fa-comment-o fa-2x pull-right"></i><br />' + data;
 			console.log('Message Received');
 		}
 		else {
