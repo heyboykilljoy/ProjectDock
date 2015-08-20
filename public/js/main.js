@@ -93,7 +93,7 @@ $(document).on('ready', function() {
 	var workingTask;
 
 	// Initialize Page Widgets
-	$("[data-toggle=popover]").popover({
+	$('.message').popover({
 		container : 'body',
 		content : 'Waiting...'
 	});
