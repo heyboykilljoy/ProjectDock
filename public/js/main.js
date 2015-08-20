@@ -23,7 +23,7 @@ var getMessages = function(){
 
 // Save page state with the user in the databaase
 var pageState = function(){
-	console.log("I be savin' data!");
+	// console.log("I be savin' data!");
 	var pageSave = $('.save-container').html();
 	$.ajax({
 		method 	: 'POST',
@@ -125,17 +125,18 @@ $(document).on('ready', function() {
 				var fromString = $(this).text().slice(0, 10);
 				var toString = $(this).text().slice(14, 25);
 				var currentPercentComplete = $(this).parent().find('.progress-bar-success').text()
-				// console.log('Success pixels = ' + $(this).parent().find('.progress-bar-success').width())
-				// console.log('Total pixels = ' + $(this).parent().find('.progress').width())
-
-				// console.log(currentPercentComplete);
-
 				var newPlannedTotal = new Date(toString) - new Date(fromString);
 				var newelapsedTime = new Date() - new Date(fromString);
 				var newPlannedComplete = (newelapsedTime / newPlannedTotal) * 100;
 				
-				// $(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
-				// $(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
+				if (newPlannedComplete > 100) {
+					var calcOver = newPlannedComplete - 100;
+					$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete - calcOver) + '%').text(newPlannedComplete);			
+				}
+				else {
+					$(this).parent().find('.progress-bar-danger').width((newPlannedComplete - currentPercentComplete) + '%').text(newPlannedComplete);			
+				}
+				$(this).parent().find('.progress-bar-success').width(currentPercentComplete + '%');
 			}	
 		});
 	});
@@ -336,7 +337,7 @@ $(document).on('ready', function() {
 			$(selectedTask).find('.progress-bar-danger').width('0');
 		}
 		else {
-			console.log('Behind Schedule');
+			// console.log('Behind Schedule');
 			if (!percentComplete) {
 				percentComplete = ($(selectedTask).find('.progress-bar-success').width() / $(selectedTask).find('.progress').width()) * 100;
 			}
