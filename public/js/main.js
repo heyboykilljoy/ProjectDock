@@ -8,10 +8,7 @@ var getMessages = function(){
 		if(data !== "OK") {
 			$('.badge.message').text('!');
 			$('.message').data('bs.popover').options.content = '<i class="fa fa-comment-o fa-2x pull-right"></i><br />' + data;
-			console.log('Message Received');
-		}
-		else {
-			// console.log('No Message');
+			// console.log('Message Received');
 		}
 	};
 	$.ajax({
@@ -50,7 +47,7 @@ var loadSortable = function(){
 }
 
 var pageRetrieve = function(){
-	console.log('Loading Saved Data');
+	// console.log('Loading Saved Data');
 	$.ajax({
 		method 	: 'GET',
 		url   	: '/db',
@@ -88,7 +85,7 @@ $(document).on('ready', function() {
 	clientList = JSON.parse(localStorage["clients"]);
 	
 	pageRetrieve();
-	$('.badge.urgent').text(2);
+	// $('.badge.urgent').text(2);
 
 	var workingProject;
 	var workingTask;
@@ -100,7 +97,7 @@ $(document).on('ready', function() {
 	});
 	$('.urgent').popover({
 		container : 'body',
-		content : '<p><strong>Overdue</strong> - Final Project</p><p><strong>Behind</strong> - Final Project</p>'
+		// content : '<p><strong>Overdue</strong> - Final Project</p><p><strong>Behind</strong> - Final Project</p>'
 	});
 	$('#fromDate').datepicker();
 	$('#toDate').datepicker({defaultDate: "+1w"});
@@ -236,29 +233,17 @@ $(document).on('ready', function() {
 	$('.save-container').on('click', 'table.projects tr.project', function(){
 		var selectedProjectTasks = $(this).find('table.tasks');
 		var activeProjectTasks = $(this).siblings('tr').find('table.tasks.active');
-
+		
 		if (selectedProjectTasks.hasClass('active')) {
-			// $(this).children('td').children('.progress').fadeIn(100);
-			selectedProjectTasks.removeClass('active').fadeOut().animate({opacity : 0}, 100, function(){
-				$(this).parent().children('.progress').fadeIn(function(){
-					setTimeout(pageState, 1000);
-				});
+			selectedProjectTasks.removeClass('active').fadeOut().animate({opacity : 0}, function(){
+				pageState();
 			});
 		}
 		else {
-			$(this).children('td').children('.progress').fadeOut(10);
-			selectedProjectTasks.addClass('active').fadeIn().animate({opacity : 1}, 100, function(){
+			selectedProjectTasks.addClass('active').fadeIn().animate({opacity : 1}, function(){
 				pageState();
 			});
-			$(this).find('table.tasks').find('a.btn').animate({
-				opacity : 0
-			}, 100);
-			$(this).find('table.tasks').siblings('a.btn').animate({
-				opacity : 1
-			}, 100);
-			activeProjectTasks.removeClass('active').fadeOut(function(){
-				$(this).parent().children('.progress').fadeIn();
-			});
+			activeProjectTasks.removeClass('active').fadeOut()
 		}
 	});
 
@@ -294,7 +279,6 @@ $(document).on('ready', function() {
 		}
 	});
 
-	
 	// Task Click Events
 	$('.save-container').on('click', 'table.tasks tr', function(event){
 		var taskName = $(this).find('h4').first().text();
@@ -333,7 +317,7 @@ $(document).on('ready', function() {
 		if(percentComplete > plannedPercentComplete) {
 			// console.log('Ahead of Schedule');
 			// console.log(percentComplete + ' is greater than ' + plannedPercentComplete);
-			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%');
+			$(selectedTask).find('.progress-bar-success').width(percentComplete + '%').text(percentComplete);
 			$(selectedTask).find('.progress-bar-danger').width('0');
 		}
 		else {

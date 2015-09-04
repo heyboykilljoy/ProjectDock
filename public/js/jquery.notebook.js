@@ -272,7 +272,7 @@
                         // y: bubbleHeight + $(document).scrollTop()
                         y: boundary.top - offsetTop + 10 + $(document).scrollTop()
                     };
-                console.log(offset)
+                // console.log(offset)
                 transform.translate(elem, pos.x, pos.y);
             },
             /*
