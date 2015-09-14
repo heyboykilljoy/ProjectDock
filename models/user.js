@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://localhost/projectdock');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/projectdock');
 
 var userSchema = mongoose.Schema({
 	userID : {

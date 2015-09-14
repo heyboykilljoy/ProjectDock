@@ -53,6 +53,7 @@ app.get('/app', startupController.app);
 app.get('/db', apiController.pageRetrieve);
 app.post('/db', apiController.pageSave);
 
-var server = app.listen(80, function() {
+var port = process.env.PORT || 3000;
+var server = app.listen(port, function() {
 	console.log('Express server listening on port ' + server.address().port);
 });
