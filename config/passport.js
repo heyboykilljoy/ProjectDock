@@ -63,7 +63,7 @@ passport.use(new FacebookStrategy({
 					photo : profile.photos[0].value,
 					userFirstName : profile.name.givenName,
 					userLastName : profile.name.familyName,
-					password : 'facebook'
+					password : configVars.facebookPassword
 				});
 
         		newUser.save(function(err, saved){
@@ -97,7 +97,7 @@ passport.use(new GoogleStrategy({
 					photo : profile.photos[0].value,
 					userFirstName : profile.name.givenName,
 					userLastName : profile.name.familyName,
-					password : 'google'
+					password : configVars.googlePassword
         		});
 
         		newUser.save(function(err, saved) {
