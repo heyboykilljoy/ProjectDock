@@ -54,6 +54,12 @@ passport.use(new FacebookStrategy({
       		if (err) { return done(err); }
 
     		if (user) {
+    			user.photo = profile.photos[0].value;
+    			user.save(function(err) {
+    				if (err) {
+    					console.log(err);
+    				}
+    			});
         		done(null, user);
     		}
       		else {
