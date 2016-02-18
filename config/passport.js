@@ -60,8 +60,10 @@ passport.use(new FacebookStrategy({
     					console.log(err);
     				}
     			});
+        	
         		done(null, user);
     		}
+
       		else {
 				var newUser = new User({
 					userID	: profile.emails[0].value,
@@ -94,8 +96,16 @@ passport.use(new GoogleStrategy({
       		if (err) { return done(err); }
 
       		if (user) {
+    			user.photo = profile.photos[0].value;
+    			user.save(function(err) {
+    				if (err) {
+    					console.log(err);
+    				}
+    			});
+        	
         		done(null, user);
-      		}
+    		}
+
       		else {
         		var newUser = new User({
         			userID	: profile.emails[0].value,
