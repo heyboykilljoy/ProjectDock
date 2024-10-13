@@ -1,5 +1,5 @@
 {
-        "facebookClientID" 		: "Enter Facebook Client ID from Developer Account",
+        "100002455138203" 		: "Enter Facebook Client ID from Developer Account",
         "facebookClientSecret"  : "Enter Facebook Client Secret from Developer Account",
         "facebookPassword"		: "Demo Password in case of poor connectivity",
         "googleClientID" 		: "Enter Google Client ID from Developer Account",
